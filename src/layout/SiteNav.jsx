@@ -8,7 +8,6 @@ import logo from "../assets/logo.jpeg"
 export default function SiteNav() {
     var { t, i18n } = useTranslation()
 
-    console.log(i18n)
 
     let handleLanguage = () => {
         i18n.language === 'en' ? i18n.changeLanguage('ar') : i18n.changeLanguage('en')
@@ -25,6 +24,7 @@ export default function SiteNav() {
                         <NavLink to="/" className="nav-link">{t('home')}</NavLink>
                         <NavLink to="/products" className="nav-link">{t('products')}</NavLink>
                         <NavLink to="/single_product" className="nav-link">Single product</NavLink>
+                        <NavLink to="/add_new_product" className="nav-link">Add new product</NavLink>
                     </Nav>
                     <div>
                         <FaLanguage onClick={handleLanguage} />

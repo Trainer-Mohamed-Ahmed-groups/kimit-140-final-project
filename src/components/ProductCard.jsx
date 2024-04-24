@@ -1,8 +1,24 @@
 /* eslint-disable react/prop-types */
-import { Col, Card } from "react-bootstrap"
+import { Col, Card, Button } from "react-bootstrap"
+import { Link } from "react-router-dom"
+import Swal from 'sweetalert2'
 
+export default function ProductCard({ product, getProducts }) {
 
-export default function ProductCard({ product }) {
+    const handleDelete = (id) => {
+        Swal.fire({
+            icon: "error",
+            title: "Are your sure ",
+            showCancelButton: true,
+            confirmButtonText: "Delete",
+            denyButtonText: `Cancel`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('http://localhost:3000/products/' + id, { method: 'DELETE' }).then(() => getProducts()).then(() => Swal.fire("Deleted !", "", "success"))
+            }
+        });
+    }
+
     return (
         <Col>
             <Card className="h-100">
@@ -11,8 +27,10 @@ export default function ProductCard({ product }) {
                     <Card.Title>{product.title}</Card.Title>
                     <Card.Text>{product.description}</Card.Text>
                 </Card.Body>
-                <Card.Footer>
-                    <small className="text-muted">Last updated 3 mins ago</small>
+                <Card.Footer className="text-center">
+                    <Link className="btn btn-primary" to={`/products/${product.id}`}>Show more</Link>
+                    <Link className="btn btn-info" to={`/products/edit/${product.id}`}>Edit</Link>
+                    <Button variant="danger" onClick={() => handleDelete(product.id)}>Delete</Button>
                 </Card.Footer>
             </Card>
         </Col>
